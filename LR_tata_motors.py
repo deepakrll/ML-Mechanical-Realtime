@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
-from sklearn.metrics import mean_squared_error
+from sklearn.metrics import mean_squared_error, r2_score
 
 # Generate synthetic data
 np.random.seed(42)
@@ -25,14 +25,16 @@ model.fit(X_train, y_train)
 # Predict and evaluate
 y_pred = model.predict(X_test)
 mse = mean_squared_error(y_test, y_pred)
+r2 = r2_score(y_test, y_pred)
 
 # Plot results
-plt.scatter(X_test, y_test, color='blue', label="Actual")
-plt.scatter(X_test, y_pred, color='red', label="Predicted")
+plt.figure(figsize=(8,5))
+plt.scatter(X_test, y_test, color='blue', label="Actual Data")
+plt.plot(X_test, y_pred, color='red', linewidth=2, label="Regression Line")
 plt.xlabel("Operating Hours")
-plt.ylabel("Maintenance Cost")
-plt.title("Tata Motors - Maintenance Cost Prediction")
+plt.ylabel("Maintenance Cost (in Rs.)")
+plt.title(f"Tata Motors - Maintenance Cost Prediction\nR² Value: {r2:.2f}")
 plt.legend()
+plt.grid()
 plt.show()
 
-print(f"Mean Squared Error: {mse}")
